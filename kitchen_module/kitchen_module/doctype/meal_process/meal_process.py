@@ -10,46 +10,55 @@ class MealProcess(Document):
 			if self.get_items_from == "Sales Order":
 				for i in self.main_items:
 					cost = 0
-					for j in self.recipe_items:
-						if i.item_code == j.parent_item and i.seles_order_ref == j.sales_order_ref:
-							if i.qty > 0:
-								j.qty = j.bom_qty * i.qty
-								if j.rate:
-									j.amount = j.qty * j.rate
-									cost = cost + j.amount
-							else:
-								if j.amount:
-									cost = cost + j.amount	
+					for k in self.bom_list:
+						if i.item_code == k.main_item and i.seles_order_ref == j.sales_order_ref:
+							main_bom_qty = k.qty
+						for j in self.recipe_items:
+							if i.item_code == j.parent_item and i.seles_order_ref == j.sales_order_ref:
+								if i.qty > 0:
+									j.qty = (j.bom_qty * i.qty)/main_bom_qty
+									if j.rate:
+										j.amount = j.qty * j.rate
+										cost = cost + j.amount
+								else:
+									if j.amount:
+										cost = cost + j.amount	
 					i.cost = cost
 					#i.profit = i.amount - i.cost
 			elif self.get_items_from == "Material Request":
 				for i in self.main_items:
 					cost = 0
-					for j in self.recipe_items:
-						if i.item_code == j.parent_item and i.material_request_ref == j.material_request_ref:
-							if i.qty > 0:
-								j.qty = j.bom_qty * i.qty
-								if j.rate:
-									j.amount = j.qty * j.rate
-									cost = cost + j.amount
-							else:
-								if j.amount:
-									cost = cost + j.amount	
+					for k in self.bom_list:
+						if i.item_code == k.main_item and i.material_request_ref == k.material_request_ref:
+							main_bom_qty = k.qty
+						for j in self.recipe_items:
+							if i.item_code == j.parent_item and i.material_request_ref == j.material_request_ref:
+								if i.qty > 0:
+									j.qty = (j.bom_qty * i.qty)/main_bom_qty
+									if j.rate:
+										j.amount = j.qty * j.rate
+										cost = cost + j.amount
+								else:
+									if j.amount:
+										cost = cost + j.amount	
 					i.cost = cost
 					#i.profit = i.amount - i.cost
 			else:
 				for i in self.main_items:
 					cost = 0
-					for j in self.recipe_items:
-						if i.item_code == j.parent_item:
-							if i.qty > 0:
-								j.qty = j.bom_qty * i.qty
-								if j.rate:
-									j.amount = j.qty * j.rate
-									cost = cost + j.amount
-							else:
-								if j.amount:
-									cost = cost + j.amount	
+					for k in self.bom_list:
+						if i.item_code == k.main_item:
+							main_bom_qty = k.qty
+						for j in self.recipe_items:
+							if i.item_code == j.parent_item:
+								if i.qty > 0:
+									j.qty = (j.bom_qty * i.qty)/main_bom_qty
+									if j.rate:
+										j.amount = j.qty * j.rate
+										cost = cost + j.amount
+								else:
+									if j.amount:
+										cost = cost + j.amount	
 					i.cost = cost
 					#i.profit = i.amount - i.cost
 

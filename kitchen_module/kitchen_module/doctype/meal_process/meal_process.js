@@ -88,13 +88,14 @@ frappe.ui.form.on('Meal Process', {
 							main_item.seles_order_ref = sales_orders[s].sales_order
 							cur_frm.refresh_field("main_items");
 
-							frappe.db.get_value('BOM', {item: d.items[i].item_code, is_default: '1'}, ['name','total_cost'])
+							frappe.db.get_value('BOM', {item: d.items[i].item_code, is_default: '1'}, ['name','total_cost','quantity'])
     						.then(r => {
         							let values = r.message;
         							//console.log(values);
 									let t_bom = cur_frm.add_child("bom_list");
 									t_bom.bom = values.name;
 									t_bom.main_item = d.items[i].item_code;
+									t_bom.qty = values.quantity;
 									t_bom.cost_per_unit = values.total_cost
 									t_bom.sales_order_ref = sales_orders[s].sales_order
 									t_bom.item_group = d.items[i].item_group;
@@ -154,13 +155,14 @@ frappe.ui.form.on('Meal Process', {
 							main_item.material_request_ref = material_requests[s].material_request
 							cur_frm.refresh_field("main_items");
 
-							frappe.db.get_value('BOM', {item: d.items[i].item_code, is_default: '1'}, ['name','total_cost'])
+							frappe.db.get_value('BOM', {item: d.items[i].item_code, is_default: '1'}, ['name','total_cost','quantity'])
     						.then(r => {
         							let values = r.message;
         							//console.log(values);
 									let t_bom = cur_frm.add_child("bom_list");
 									t_bom.bom = values.name;
 									t_bom.main_item = d.items[i].item_code;
+									t_bom.qty = values.quantity;
 									t_bom.cost_per_unit = values.total_cost
 									t_bom.material_request_ref = material_requests[s].material_request
 									t_bom.item_group = d.items[i].item_group;
@@ -260,13 +262,14 @@ frappe.ui.form.on('Meal Process', {
 			frm.clear_table("recipe_items");
 			let items = cur_frm.doc.main_items;
 			for (let i = 0; i < items.length; i++){
-				frappe.db.get_value('BOM', {item: items[i].item_code, is_default: '1'}, ['name','total_cost'])
+				frappe.db.get_value('BOM', {item: items[i].item_code, is_default: '1'}, ['name','total_cost','quantity'])
 				.then(r => {
 						let values = r.message;
 						//console.log(values);
 						let t_bom = cur_frm.add_child("bom_list");
 						t_bom.bom = values.name;
 						t_bom.main_item = items[i].item_code;
+						t_bom.qty = values.quantity;
 						t_bom.cost_per_unit = values.total_cost
 						t_bom.item_group = items[i].item_group;
 						cur_frm.refresh_field("bom_list");
