@@ -68,6 +68,8 @@ class MealProcess(Document):
 				se = frappe.new_doc("Stock Entry")
 				se.stock_entry_type = self.stock_entry_type
 				se.meal_process = self.name
+				se.set_posting_time = 1
+				se.posting_date = self.posting_date
 				se.from_bom = 1
 				se.from_warehouse = self.source_warehouse
 				se.to_warehouse = self.target_warehouse
@@ -103,6 +105,8 @@ class MealProcess(Document):
 				se = frappe.new_doc("Stock Entry")
 				se.stock_entry_type = self.stock_entry_type
 				se.meal_process = self.name
+				se.set_posting_time = 1
+				se.posting_date = self.posting_date
 				se.from_bom = 1
 				se.from_warehouse = self.source_warehouse
 				se.to_warehouse = self.target_warehouse
@@ -138,6 +142,8 @@ class MealProcess(Document):
 				se = frappe.new_doc("Stock Entry")
 				se.stock_entry_type = self.stock_entry_type
 				se.meal_process = self.name
+				se.set_posting_time = 1
+				se.posting_date = self.posting_date
 				se.from_bom = 1
 				se.from_warehouse = self.source_warehouse
 				se.to_warehouse = self.target_warehouse
